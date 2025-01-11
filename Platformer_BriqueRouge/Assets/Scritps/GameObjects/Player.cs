@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position-transform.up*_RayCastDistance,_DetectionBoxSize);
+        Gizmos.DrawWireCube(transform.position-transform.up*_RayCastDistance,_DetectionBoxSize); //permet de voir la boxcast de detection du sol
     }
 
     //DEBUG A SUPPRIMER AVANT CODEREVIEW
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
 
     private bool IsGrounded()
     {
-        if(Physics2D.BoxCast(transform.position,_DetectionBoxSize,0,-transform.up, _RayCastDistance, _GroundLayer)) return true;
+        if(Physics2D.BoxCast(transform.position - transform.up * _RayCastDistance, _DetectionBoxSize,0,-transform.up, 0, layerMask:_GroundLayer)) return true; //makes a box raycast to detect the ground below player
         return false;
     }
 
