@@ -6,7 +6,6 @@ public class Player : MonoBehaviour
     private Vector3 _AccelerationVector = Vector3.zero;
     private Vector3 _Velocity = Vector3.zero;
 
-
     //Horizontal Movements :
     [SerializeField] private float _AccelerationSpeed = 10f;
     [SerializeField] private float _DeccelerationSpeed = 8f;
@@ -19,14 +18,19 @@ public class Player : MonoBehaviour
     [SerializeField] private float _JumpForce = 50f;
     private bool _Jump = false;
 
-    //GroundDetection :
+    //Ground Detection :
     private bool _IsGrounded = false;
     private bool _IsHeadColliding = false;
-    [SerializeField] private float _RayCastDistance = 1f;
+    [SerializeField] private float _RayCastUpDownDistance = 1f;
     [SerializeField] private Vector2 _GroundDetectionBoxSize;
     [SerializeField] private Vector2 _HeadDetectionBoxSize;
     [SerializeField] private LayerMask _GroundLayer;
 
+    //Side Collisions :
+    private bool _IsRightColliding = false;
+    private bool _IsLeftColliding = false;
+    [SerializeField] private float _RayCastSideDistance = .5f;
+    [SerializeField] private Vector2 _SideDetectionBoxSize;
 
 
     void Start()
@@ -43,19 +47,22 @@ public class Player : MonoBehaviour
         Jump();
         Deccelerate();
         Accelerate();
+        CollideWithWalls();
         Move();
     }
 
-    //DEBUG A SUPPRIMER AVANT CODEREVIEW
+    //DEBUG A SUPPRIMER AVANT CODEREVIEW --------------------------------------
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position-transform.up*_RayCastDistance,_GroundDetectionBoxSize); //permet de voir la boxcast de detection du sol
-        Gizmos.DrawWireCube(transform.position + transform.up * _RayCastDistance, _HeadDetectionBoxSize); //celle au dessus de lui
+        Gizmos.DrawWireCube(transform.position-transform.up*_RayCastUpDownDistance,_GroundDetectionBoxSize); //permet de voir la boxcast de detection du sol
+        Gizmos.DrawWireCube(transform.position + transform.up * _RayCastUpDownDistance, _HeadDetectionBoxSize); //celle au dessus de lui
+        Gizmos.DrawWireCube(transform.position + transform.right * _RayCastSideDistance, _SideDetectionBoxSize); //celle a droite
+        Gizmos.DrawWireCube(transform.position - transform.right * _RayCastSideDistance, _SideDetectionBoxSize); //celle a droite
 
     }
 
-    //DEBUG A SUPPRIMER AVANT CODEREVIEW
+    //DEBUG A SUPPRIMER AVANT CODEREVIEW ----------------------------------------
 
 
     private void Inputs ()
@@ -66,10 +73,11 @@ public class Player : MonoBehaviour
 
     private bool IsGrounded()
     {
-        if(Physics2D.BoxCast(transform.position - transform.up * _RayCastDistance, _GroundDetectionBoxSize,0,-transform.up, 0, layerMask:_GroundLayer)) return true; //makes a box raycast to detect the ground below player
+        if(Physics2D.BoxCast(transform.position - transform.up * _RayCastUpDownDistance, _GroundDetectionBoxSize,0,-transform.up, 0, layerMask:_GroundLayer)) return true; //makes a box raycast to detect the ground below player
         return false;
     }
 
+    #region Horizontal Movements
     private void Accelerate()
     {
         if(Mathf.Abs(_Velocity.x)<_MaxSpeedHorizontal) _Velocity += _AccelerationVector * _AccelerationSpeed * Time.deltaTime;        
@@ -86,10 +94,26 @@ public class Player : MonoBehaviour
             if (Mathf.Abs(_Velocity.x) < _VelocityMin) _Velocity = Vector3.up * _Velocity.y; //if horizontal velocity is small, makes it = 0 and keeps vertical velocity
             
         }   
-        else if(_Velocity.x * Input.GetAxisRaw("Horizontal") < 0) _Velocity = Vector3.up * _Velocity.y; //to stop when changing direction
-        
+        else if(_Velocity.x * Input.GetAxisRaw("Horizontal") < 0) _Velocity = Vector3.up * _Velocity.y; //to stop and not slide when changing direction        
     }
 
+    private void CollideWithWalls()
+    {
+        //Right:
+        if (Physics2D.BoxCast(transform.position + transform.right * _RayCastSideDistance, _SideDetectionBoxSize, 0, transform.right, 0, layerMask: _GroundLayer))
+        {
+            if(_Velocity.x>0) _Velocity.x = 0;
+        }
+        if (Physics2D.BoxCast(transform.position - transform.right * _RayCastSideDistance, _SideDetectionBoxSize, 0, -transform.right, 0, layerMask: _GroundLayer))
+        {
+            if(_Velocity.x<0) _Velocity.x = 0;
+        }
+    }
+
+
+    #endregion
+
+    #region Vertical Movements
     private void Gravity()
     {
         if (_IsGrounded)
@@ -103,9 +127,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// To bump and fall down when jumping head first into a wall
+    /// </summary>
     private void TopOfHeadCollision()
     {
-        if (Physics2D.BoxCast(transform.position + transform.up * _RayCastDistance, _HeadDetectionBoxSize, 0, transform.up, 0, layerMask: _GroundLayer))
+        if (Physics2D.BoxCast(transform.position + transform.up * _RayCastUpDownDistance, _HeadDetectionBoxSize, 0, transform.up, 0, layerMask: _GroundLayer))
         {
             if (!_IsHeadColliding)
             {
@@ -128,9 +155,12 @@ public class Player : MonoBehaviour
             _IsGrounded = false;
         }
     }
+    #endregion
 
     private void Move()
     {
         transform.position += _Velocity * Time.deltaTime * TimeManager.TimeValue;
     }
+
+
 }

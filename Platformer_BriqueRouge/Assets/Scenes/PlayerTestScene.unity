@@ -245,7 +245,7 @@ Transform:
   m_GameObject: {fileID: 97884015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0800004, y: 3.25, z: -2.298335}
+  m_LocalPosition: {x: 2.37, y: 3.18, z: -2.298335}
   m_LocalScale: {x: 2.3904, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -726,7 +726,7 @@ Transform:
   m_GameObject: {fileID: 327912649}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.64, y: -0.36, z: -2.298335}
+  m_LocalPosition: {x: 9.09, y: -0.42999995, z: -2.298335}
   m_LocalScale: {x: 2.3904, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1050,8 +1050,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1076,7 +1076,7 @@ Transform:
   m_GameObject: {fileID: 1733671327}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.89, y: -3.85, z: -7.79}
+  m_LocalPosition: {x: 8.1, y: 0.68, z: -17.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1205,7 +1205,7 @@ Transform:
   m_GameObject: {fileID: 2074455450}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.33, y: 1.64, z: -2.298335}
+  m_LocalPosition: {x: 5.78, y: 1.57, z: -2.298335}
   m_LocalScale: {x: 2.3904, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1334,7 +1334,7 @@ Transform:
   m_GameObject: {fileID: 2114003055}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.05, y: -1.97, z: -2.298335}
+  m_LocalPosition: {x: 12.5, y: -2.04, z: -2.298335}
   m_LocalScale: {x: 2.3904, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1467,12 +1467,14 @@ MonoBehaviour:
   _GravityForce: 45
   _MaxSpeedVertical: 20
   _JumpForce: 18
-  _RayCastDistance: 1
-  _GroundDetectionBoxSize: {x: 1, y: 0.15}
+  _RayCastUpDownDistance: 1
+  _GroundDetectionBoxSize: {x: 0.88, y: 0.11}
   _HeadDetectionBoxSize: {x: 0.7, y: 0.15}
   _GroundLayer:
     serializedVersion: 2
     m_Bits: 64
+  _RayCastSideDistance: 0.44
+  _SideDetectionBoxSize: {x: 0.12, y: 1.84}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
