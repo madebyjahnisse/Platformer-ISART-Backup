@@ -2,37 +2,72 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //Movements:
+    private Vector3 _AccelerationVector = Vector3.zero;
+    private Vector3 _Velocity = Vector3.zero;
+
+
+    //Horizontal Movements :
     [SerializeField] private float _AccelerationSpeed = 10f;
     [SerializeField] private float _DeccelerationSpeed = 8f;
     [SerializeField] private float _MaxSpeedHorizontal = 100f;
+    [SerializeField] private float _VelocityMin = 0.5f;
 
-    private Vector3 _Acceleration = Vector3.zero;
-    private Vector3 _Velocity = Vector3.zero;
+    //Vertical Movements :
+    [SerializeField] private float _GravityForce = 10f;
+    [SerializeField] private float _MaxSpeedVertical = 100f;
+    [SerializeField] private float _JumpForce = 50f;
+    private bool _Jump = false;
 
-    // Start is called before the first frame update
+    //GroundDetection :
+    private bool _IsGrounded = false;
+    [SerializeField] private float _RayCastDistance = 1f;
+    [SerializeField] private Vector2 _DetectionBoxSize;
+    [SerializeField] private LayerMask _GroundLayer;
+
+
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
+        _IsGrounded = IsGrounded();
         Inputs();
+        Gravity();
+        Jump();
         Deccelerate();
         Accelerate();
-        MoveHorizontally();
+        Move();
     }
+
+    //DEBUG A SUPPRIMER AVANT CODEREVIEW
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(transform.position-transform.up*_RayCastDistance,_DetectionBoxSize);
+    }
+
+    //DEBUG A SUPPRIMER AVANT CODEREVIEW
+
 
     private void Inputs ()
     {
-        _Acceleration = new Vector3(Input.GetAxisRaw("Horizontal")*_AccelerationSpeed,0,0);
-        
+        _AccelerationVector = new Vector3(Input.GetAxisRaw("Horizontal"),0,0);
+        _Jump = Input.GetKey(KeyCode.Space);
+    }
+
+    private bool IsGrounded()
+    {
+        if(Physics2D.BoxCast(transform.position,_DetectionBoxSize,0,-transform.up, _RayCastDistance, _GroundLayer)) return true;
+        return false;
     }
 
     private void Accelerate()
     {
-        if(Mathf.Abs(_Velocity.x)<_MaxSpeedHorizontal) _Velocity += _Acceleration *Time.deltaTime;        
+        if(Mathf.Abs(_Velocity.x)<_MaxSpeedHorizontal) _Velocity += _AccelerationVector * _AccelerationSpeed * Time.deltaTime;        
     }
 
     private void Deccelerate()
@@ -40,13 +75,40 @@ public class Player : MonoBehaviour
         if (_Velocity.x != 0 && Input.GetAxisRaw("Horizontal")==0)
         {
             float lSpeedRatio = Mathf.Abs(_Velocity.x) / _MaxSpeedHorizontal;
-            if (_Velocity.x > 0) _Velocity += new Vector3(-_DeccelerationSpeed * (1 + lSpeedRatio), 0, 0)  * Time.deltaTime; //* (1 + lSpeedRatio) -> faster you go, faster you slow deccelerate
-            else _Velocity+= new Vector3(_DeccelerationSpeed * (1 + lSpeedRatio), 0, 0) * Time.deltaTime;
-        }       
+            if (_Velocity.x > 0) _Velocity += Vector3.left * (_DeccelerationSpeed * (1 + lSpeedRatio))  * Time.deltaTime; //* (1 + lSpeedRatio) -> faster you go, faster you slow deccelerate
+            else _Velocity+= Vector3.right * (_DeccelerationSpeed * (1 + lSpeedRatio)) * Time.deltaTime;
+
+            if (Mathf.Abs(_Velocity.x) < _VelocityMin) _Velocity = Vector3.up * _Velocity.y; //if horizontal velocity is small, makes it = 0 and keeps vertical velocity
+            
+        }   
+        else if(_Velocity.x * Input.GetAxisRaw("Horizontal") < 0) _Velocity = Vector3.up * _Velocity.y; //to stop when changing direction
+        
     }
 
-    private void MoveHorizontally()
+    private void Gravity()
     {
-        transform.position += _Velocity * Time.deltaTime;
+        if (_IsGrounded)
+        {
+            _Velocity = Vector3.right * _Velocity.x; //vertical velocity = 0 but keeps horiztonal velocity
+            return;
+        }
+        else
+        {
+            if (Mathf.Abs(_Velocity.y) < _MaxSpeedVertical) _Velocity += -Vector3.up * _GravityForce * Time.deltaTime; //to fall down
+        }
+    }
+
+    private void Jump()
+    {
+        if(_IsGrounded && _Jump)
+        {
+            _Velocity += Vector3.up * _JumpForce;
+            _IsGrounded = false;
+        }
+    }
+
+    private void Move()
+    {
+        transform.position += _Velocity * Time.deltaTime * TimeManager.TimeValue;
     }
 }
