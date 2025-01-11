@@ -21,8 +21,10 @@ public class Player : MonoBehaviour
 
     //GroundDetection :
     private bool _IsGrounded = false;
+    private bool _IsHeadColliding = false;
     [SerializeField] private float _RayCastDistance = 1f;
-    [SerializeField] private Vector2 _DetectionBoxSize;
+    [SerializeField] private Vector2 _GroundDetectionBoxSize;
+    [SerializeField] private Vector2 _HeadDetectionBoxSize;
     [SerializeField] private LayerMask _GroundLayer;
 
 
@@ -37,6 +39,7 @@ public class Player : MonoBehaviour
         _IsGrounded = IsGrounded();
         Inputs();
         Gravity();
+        TopOfHeadCollision();
         Jump();
         Deccelerate();
         Accelerate();
@@ -47,7 +50,9 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position-transform.up*_RayCastDistance,_DetectionBoxSize); //permet de voir la boxcast de detection du sol
+        Gizmos.DrawWireCube(transform.position-transform.up*_RayCastDistance,_GroundDetectionBoxSize); //permet de voir la boxcast de detection du sol
+        Gizmos.DrawWireCube(transform.position + transform.up * _RayCastDistance, _HeadDetectionBoxSize); //celle au dessus de lui
+
     }
 
     //DEBUG A SUPPRIMER AVANT CODEREVIEW
@@ -61,7 +66,7 @@ public class Player : MonoBehaviour
 
     private bool IsGrounded()
     {
-        if(Physics2D.BoxCast(transform.position - transform.up * _RayCastDistance, _DetectionBoxSize,0,-transform.up, 0, layerMask:_GroundLayer)) return true; //makes a box raycast to detect the ground below player
+        if(Physics2D.BoxCast(transform.position - transform.up * _RayCastDistance, _GroundDetectionBoxSize,0,-transform.up, 0, layerMask:_GroundLayer)) return true; //makes a box raycast to detect the ground below player
         return false;
     }
 
@@ -96,6 +101,23 @@ public class Player : MonoBehaviour
         {
             if (Mathf.Abs(_Velocity.y) < _MaxSpeedVertical) _Velocity += -Vector3.up * _GravityForce * Time.deltaTime; //to fall down
         }
+    }
+
+    private void TopOfHeadCollision()
+    {
+        if (Physics2D.BoxCast(transform.position + transform.up * _RayCastDistance, _HeadDetectionBoxSize, 0, transform.up, 0, layerMask: _GroundLayer))
+        {
+            if (!_IsHeadColliding)
+            {
+                _Velocity = Vector3.right * _Velocity.x; //The player does not go through ground from under
+                _IsHeadColliding = true;
+            }
+            else
+            {
+                _Velocity += -Vector3.up * _GravityForce * Time.deltaTime; //to fall down
+            }
+        }
+        else _IsHeadColliding = false;
     }
 
     private void Jump()
