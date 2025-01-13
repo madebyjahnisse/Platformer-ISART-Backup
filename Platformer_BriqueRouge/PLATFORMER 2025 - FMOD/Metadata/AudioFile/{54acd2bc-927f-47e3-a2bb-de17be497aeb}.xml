@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{54acd2bc-927f-47e3-a2bb-de17be497aeb}">
+		<property name="assetPath">
+			<value>MUSIC/PLATFORMER 2025 - Music ID.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>24.335999999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{323e0b1d-60dc-49b4-b4cb-c960a3a22fe7}</destination>
+		</relationship>
+	</object>
+</objects>

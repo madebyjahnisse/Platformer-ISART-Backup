@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="SandboxScene" id="{d3a7f1bb-d239-456f-9e54-e192ccc2778d}">
+		<property name="name">
+			<value>Test</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7907e018-ec2f-4f8d-ac2d-d54b5db576c3}</destination>
+		</relationship>
+		<relationship name="markerTracks">
+			<destination>{c784cb6d-9288-4a37-84d1-a6bc92519925}</destination>
+		</relationship>
+		<relationship name="timeline">
+			<destination>{94fb862e-b723-4984-828c-2cab05332e1f}</destination>
+		</relationship>
+		<relationship name="emitters">
+			<destination>{ae58b462-5e58-45ff-b94c-72c608252462}</destination>
+			<destination>{9bed8f67-da31-4290-8734-576d713b2dfb}</destination>
+		</relationship>
+	</object>
+	<object class="MarkerTrack" id="{c784cb6d-9288-4a37-84d1-a6bc92519925}" />
+	<object class="Timeline" id="{94fb862e-b723-4984-828c-2cab05332e1f}" />
+	<object class="SandboxEmitter" id="{ae58b462-5e58-45ff-b94c-72c608252462}">
+		<property name="positionX">
+			<value>-5.0250001</value>
+		</property>
+		<property name="positionZ">
+			<value>3.70000005</value>
+		</property>
+		<relationship name="event">
+			<destination>{b1d22e30-0271-480f-b151-0cd322c098b4}</destination>
+		</relationship>
+	</object>
+	<object class="SandboxEmitter" id="{9bed8f67-da31-4290-8734-576d713b2dfb}">
+		<property name="positionX">
+			<value>-0.275000006</value>
+		</property>
+		<property name="positionZ">
+			<value>5.0250001</value>
+		</property>
+		<relationship name="event">
+			<destination>{d77f0cf0-4f7b-4b5b-9cfd-bc1f2a6e2fd0}</destination>
+		</relationship>
+	</object>
+</objects>
