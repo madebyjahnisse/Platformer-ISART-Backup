@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
     private bool _DashConfirm = false;
 
     //Ground Detection :
+    private RaycastHit2D Tophit;
+    private RaycastHit2D DownHit;
     private bool _IsGrounded = false;
     private bool _IsHeadColliding = false;
     [SerializeField] private float _RayCastUpDownDistance = 1f;
@@ -53,6 +55,10 @@ public class Player : MonoBehaviour
 
     //Tyrolienne :
     public bool isTyro = false;
+
+    //Platform:
+    [SerializeField] private string _TraversableTag = "Traversable";
+    [SerializeField] private float _TraversableSize = 1f;
 
     #region Singleton
     private static Player _Instance;
@@ -118,7 +124,18 @@ public class Player : MonoBehaviour
 
 private bool IsGrounded()
     {
-        if(Physics2D.BoxCast(transform.position - transform.up * _RayCastUpDownDistance, _GroundDetectionBoxSize,0,-transform.up, 0, layerMask:_GroundLayer)) return true; //makes a box raycast to detect the ground below player
+        if (DownHit = Physics2D.BoxCast(transform.position - transform.up * _RayCastUpDownDistance, _GroundDetectionBoxSize, 0, -transform.up, 0, layerMask: _GroundLayer))
+        {
+            if(DownHit.transform.gameObject.CompareTag(_TraversableTag) && 
+                DownHit.transform.position.y+_TraversableSize > transform.position.y)
+            {
+                Debug.Log("test : "+ DownHit.transform.position.y + _TraversableSize);
+                Debug.Log("reel : "+ transform.position.y);
+
+                return false;
+            }
+            return true; //makes a box raycast to detect the ground below player
+        }
         return false;
     }
 
@@ -177,9 +194,10 @@ private bool IsGrounded()
     /// </summary>
     private void TopOfHeadCollision()
     {
-        if (Physics2D.BoxCast(transform.position + transform.up * _RayCastUpDownDistance, _HeadDetectionBoxSize, 0, transform.up, 0, layerMask: _GroundLayer))
+        
+        if (Tophit=Physics2D.BoxCast(transform.position + transform.up * _RayCastUpDownDistance, _HeadDetectionBoxSize, 0, transform.up, 0, layerMask: _GroundLayer))
         {
-            if (!_IsHeadColliding)
+            if (!_IsHeadColliding && !Tophit.transform.gameObject.CompareTag(_TraversableTag))
             {
                 _Velocity = Vector3.right * _Velocity.x; //The player does not go through ground from under
                 _IsHeadColliding = true;

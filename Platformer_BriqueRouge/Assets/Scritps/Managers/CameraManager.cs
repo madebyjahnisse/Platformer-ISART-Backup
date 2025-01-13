@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    [SerializeField] public bool _IsFollowPlayer;
+
     [SerializeField] public Transform target;
     [SerializeField] private float _FollowSpeed = 2f;
     [SerializeField] private float _MaxDistance = 20f;
@@ -18,7 +20,7 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if(target!=null) FollowPlayer();
+       if(target!=null && _IsFollowPlayer) FollowPlayer();
     }
 
     private void FollowPlayer()

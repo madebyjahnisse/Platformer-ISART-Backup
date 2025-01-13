@@ -24,8 +24,11 @@ public class Tyrolienne : MonoBehaviour
     {
         foreach (Collider2D lCollider in _ColliderList)
         {
-            //lCollider.OverlapCollider()
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player")) Debug.Log("PLAYER");
+    }
 }
