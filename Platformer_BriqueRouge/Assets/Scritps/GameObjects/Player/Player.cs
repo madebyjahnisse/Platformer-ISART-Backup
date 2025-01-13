@@ -231,7 +231,6 @@ private bool IsGrounded()
             Mathf.Cos(pDashAngle * Mathf.Deg2Rad), 0
         ).normalized;
         _Velocity = dashDirection * _DashDistance;
-        Debug.Log(dashDirection);
     }
 
 

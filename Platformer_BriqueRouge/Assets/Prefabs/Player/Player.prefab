@@ -121,12 +121,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _AccelerationSpeed: 20
-  _DeccelerationSpeed: 80
+  _DeccelerationSpeed: 20
   _MaxSpeedHorizontal: 100
   _VelocityMin: 0.5
   _GravityForce: 45
   _MaxSpeedVertical: 20
   _JumpForce: 18
+  _DashDistance: 30
+  _DashDuration: 1
+  _DashClampAngle: 45
+  _OffSetMousePositionToDash: 10
   _RayCastUpDownDistance: 1
   _GroundDetectionBoxSize: {x: 0.88, y: 0.11}
   _HeadDetectionBoxSize: {x: 0.7, y: 0.15}

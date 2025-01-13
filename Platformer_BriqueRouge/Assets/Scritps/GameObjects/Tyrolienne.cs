@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Tyrolienne : MonoBehaviour
@@ -9,6 +12,8 @@ public class Tyrolienne : MonoBehaviour
 
     [SerializeField] private float _Speed = 5f;
 
+    private Player _PlayerTransform;
+
     void Start()
     {
         
@@ -17,15 +22,16 @@ public class Tyrolienne : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (_PlayerTransform != null)
+        {
+            _PlayerTransform.transform.position += Vector3.forward * _Speed * Time.deltaTime; ;
+        }
     }
 
-    private void ConnectPlayer()
+    void OnTruggerEnter2D(Collision2D collision)
     {
-        foreach (Collider2D lCollider in _ColliderList)
-        {
-            //lCollider.OverlapCollider()
-        }
+        Debug.Log("touche");
+        _PlayerTransform = collision.gameObject.GetComponent<Player>();
     }
 
 }
