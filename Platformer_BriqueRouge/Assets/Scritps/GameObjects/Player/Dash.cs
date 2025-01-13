@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Dash : MonoBehaviour
 {
-    [SerializeField] private float DashDistance;
-    [SerializeField] private float DashDuration;
+    
     private float DashSpeed;
     void Start()
     {
