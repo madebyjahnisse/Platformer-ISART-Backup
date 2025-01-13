@@ -32,6 +32,30 @@ public class Player : MonoBehaviour
     [SerializeField] private float _RayCastSideDistance = .5f;
     [SerializeField] private Vector2 _SideDetectionBoxSize;
 
+    //Tyrolienne :
+    public bool isTyro = false;
+
+    #region Singleton
+    private static Player _Instance;
+
+    public static Player Instance
+    {
+        get 
+        {
+            if( _Instance == null )
+            {
+                Debug.Log("Player not existing");
+            }
+            return _Instance;
+            
+        }
+    }
+
+    private void Awake()
+    {
+        _Instance = this;
+    }
+    #endregion
 
     void Start()
     {
