@@ -1,4 +1,10 @@
+using System;
+using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +23,19 @@ public class Player : MonoBehaviour
     [SerializeField] private float _MaxSpeedVertical = 100f;
     [SerializeField] private float _JumpForce = 50f;
     private bool _Jump = false;
+
+    //Dash
+    [SerializeField] private float _DashDistance = 6f;
+    [SerializeField] private float _DashDuration = 1f;
+
+    private Vector2 _InitMousePosition = Vector2.zero;
+    [SerializeField] private float _DashClampAngle = 45f;
+    [SerializeField] private float _OffSetMousePositionToDash = 10f;
+    private bool _IsDashing;
+    private bool _CanDash;
+
+    private bool _DashInit = false;
+    private bool _DashConfirm = false;
 
     //Ground Detection :
     private bool _IsGrounded = false;
@@ -67,6 +86,7 @@ public class Player : MonoBehaviour
         _IsGrounded = IsGrounded();
         Inputs();
         Gravity();
+        DashInit();
         TopOfHeadCollision();
         Jump();
         Deccelerate();
@@ -88,14 +108,15 @@ public class Player : MonoBehaviour
 
     //DEBUG A SUPPRIMER AVANT CODEREVIEW ----------------------------------------
 
-
     private void Inputs ()
     {
         _AccelerationVector = new Vector3(Input.GetAxisRaw("Horizontal"),0,0);
         _Jump = Input.GetKey(KeyCode.Space);
+        _DashInit = Input.GetMouseButtonDown(0);
+        _DashConfirm = Input.GetMouseButtonUp(0);
     }
 
-    private bool IsGrounded()
+private bool IsGrounded()
     {
         if(Physics2D.BoxCast(transform.position - transform.up * _RayCastUpDownDistance, _GroundDetectionBoxSize,0,-transform.up, 0, layerMask:_GroundLayer)) return true; //makes a box raycast to detect the ground below player
         return false;
@@ -147,7 +168,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (Mathf.Abs(_Velocity.y) < _MaxSpeedVertical) _Velocity += -Vector3.up * _GravityForce * Time.deltaTime; //to fall down
+            _Velocity += -Vector3.up * _GravityForce * Time.deltaTime; //to fall down
         }
     }
 
@@ -181,6 +202,40 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    #region Dash
+    private void DashInit()
+    {
+        if (_DashInit)
+        {
+            //Play Slow Motion
+            _InitMousePosition = Input.mousePosition;
+            //Set InitMousePosition
+        }
+        if (_DashConfirm)
+        {
+            //Stop SlowMotion
+            //if InitMousePosition != MousePosition : return Clamp Angle between Mouse Position && Player
+            if (Vector2.Distance(_InitMousePosition, Input.mousePosition)> _OffSetMousePositionToDash)
+            {
+                float lAngleBetweenMouseAndPlayer = (180 / Mathf.PI) * Mathf.Atan2(Input.mousePosition.x - _InitMousePosition.x, Input.mousePosition.y - _InitMousePosition.y);
+                Dash(Mathf.Round(lAngleBetweenMouseAndPlayer / _DashClampAngle) * _DashClampAngle);
+            }
+            //if ijkl key pressed get the vector : return angle vector
+            //if android get angle from drag 
+        }
+    }
+    private void Dash(float pDashAngle)
+    {
+        Vector3 dashDirection = new Vector3(
+            Mathf.Sin(pDashAngle * Mathf.Deg2Rad),
+            Mathf.Cos(pDashAngle * Mathf.Deg2Rad), 0
+        ).normalized;
+        _Velocity = dashDirection * _DashDistance;
+        Debug.Log(dashDirection);
+    }
+
+
+    #endregion
     private void Move()
     {
         transform.position += _Velocity * Time.deltaTime * TimeManager.TimeValue;
