@@ -2612,14 +2612,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _AccelerationSpeed: 20
   _DeccelerationSpeed: 80
-  _MaxSpeedHorizontal: 20
+  _MaxSpeedHorizontal: 10
   _VelocityMin: 0.5
   _GravityForce: 45
   _MaxSpeedVertical: 20
   _JumpForce: 18
-  _DashDistance: 10
+  _DashDistance: 20
   _DashDuration: 0.2
-  _dashHoldTime: 0
+  _dashHoldTime: 0.2
   _DashClampAngle: 45
   _OffSetMousePositionToDash: 10
   _ArrowPivot: {fileID: 669158207}
@@ -2628,9 +2628,9 @@ MonoBehaviour:
   _minScaleY: 0
   _scaleSpeed: 10
   _camera: {fileID: 0}
-  _zoomInFOV: 8
+  _zoomInFOV: 13
   _zoomOutFOV: 12
-  _zoomDuration: 100
+  _zoomDuration: 1000
   _RayCastUpDownDistance: 1
   _GroundDetectionBoxSize: {x: 0.88, y: 0.11}
   _HeadDetectionBoxSize: {x: 0.7, y: 0.15}
