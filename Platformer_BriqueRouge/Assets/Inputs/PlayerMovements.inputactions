@@ -1,0 +1,34 @@
+{
+    "name": "PlayerMovements",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "a0743a01-5d0d-4eb9-9c38-1db84d844d5d",
+            "actions": [
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "f1ed892e-c7ee-4351-811d-4d82dc265121",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=0.1)",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "07de7308-8845-4a40-aaa6-efaab504ee5c",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
