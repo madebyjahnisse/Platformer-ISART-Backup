@@ -10,7 +10,7 @@ public class CheckPoints : MonoBehaviour
     public static List<Vector3> CheckPointList = new List<Vector3>();
     
     private GameObject playerToDestroy;
-    private bool _AlreadyEnabled = false;
+    private bool _CheckPointEnabled = false;
     
     void Start()
     {
@@ -22,10 +22,11 @@ public class CheckPoints : MonoBehaviour
     {
         if (pCollision.gameObject.CompareTag(Utils.PLAYER_TAG))
         {
-            if (_AlreadyEnabled) return;
+            if (_CheckPointEnabled) return;
             CheckPointList.Add(pCollision.transform.position);
-            Debug.Log("Added Collider : " + CheckPointList.Count);
-            _AlreadyEnabled = true;
+            _CheckPointEnabled = true;
+            Player.SavePlayer();
         }
     }
+
 }

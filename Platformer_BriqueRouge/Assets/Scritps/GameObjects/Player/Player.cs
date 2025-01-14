@@ -268,4 +268,16 @@ private bool IsGrounded()
         transform.position += _Velocity * Time.deltaTime * TimeManager.TimeValue;
         if (_IsOnMobilePlatform && _ActualMobilePlatform!=null) transform.position += _ActualMobilePlatform.posDifference;
     }
+    public static void SavePlayer()
+    {
+        SaveSystem.SavePlayer(_Instance);
+    }
+    public static void LoadPlayer()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+        if (data != null)
+        {
+            _Instance.transform.position = new Vector3(data._PlayerCheckPointPosition[0], data._PlayerCheckPointPosition[1], data._PlayerCheckPointPosition[2]);
+        }
+    }
 }
