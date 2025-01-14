@@ -54,6 +54,8 @@ public class Player : MonoBehaviour
     //Tyrolienne :
     public bool isTyro = false;
 
+
+
     #region Singleton
     private static Player _Instance;
 
@@ -110,10 +112,11 @@ public class Player : MonoBehaviour
 
     private void Inputs ()
     {
-        _AccelerationVector = new Vector3(Input.GetAxisRaw("Horizontal"),0,0);
+        _AccelerationVector = new Vector3(Input.GetAxisRaw(Utils.HORIZONTAL),0,0);
         _Jump = Input.GetKey(KeyCode.Space);
         _DashInit = Input.GetMouseButtonDown(0);
         _DashConfirm = Input.GetMouseButtonUp(0);
+       
     }
 
 private bool IsGrounded()
@@ -240,5 +243,5 @@ private bool IsGrounded()
         transform.position += _Velocity * Time.deltaTime * TimeManager.TimeValue;
     }
 
-
+   
 }
