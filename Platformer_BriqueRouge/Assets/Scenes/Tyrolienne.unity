@@ -2926,7 +2926,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 4.270792, y: 2.3706503}
@@ -4667,7 +4667,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.000001847744, y: 0}
@@ -9050,8 +9050,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2068907324}
   - component: {fileID: 2068907323}
-  - component: {fileID: 2068907322}
   - component: {fileID: 2068907325}
+  - component: {fileID: 2068907326}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -9059,14 +9059,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2068907322
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2068907321}
-  m_Enabled: 1
 --- !u!20 &2068907323
 Camera:
   m_ObjectHideFlags: 0
@@ -9150,6 +9142,20 @@ MonoBehaviour:
   _MaxDistance: 4
   _YOffSet: 3
   _ZOffSet: -10
+--- !u!114 &2068907326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068907321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &2083501472
 GameObject:
   m_ObjectHideFlags: 0
