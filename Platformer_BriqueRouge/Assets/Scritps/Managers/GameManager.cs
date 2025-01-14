@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
         _Respawn = Input.GetKey(KeyCode.X);
         if (_Respawn)
         {
-           _Player.transform.position = CheckPoints.CheckPointList[CheckPoints.CheckPointList.Count - 1];
+            Player.LoadPlayer();
         }
     }
 }
