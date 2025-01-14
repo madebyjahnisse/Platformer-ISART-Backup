@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Traversable
+  - Mobile
   layers:
   - Default
   - TransparentFX
