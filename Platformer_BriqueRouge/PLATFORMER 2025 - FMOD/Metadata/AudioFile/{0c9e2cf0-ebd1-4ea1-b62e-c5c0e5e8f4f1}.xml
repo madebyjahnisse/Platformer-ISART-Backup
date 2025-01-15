@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{0c9e2cf0-ebd1-4ea1-b62e-c5c0e5e8f4f1}">
+		<property name="assetPath">
+			<value>SFX/PLAYER/Footsteps/player_footstep_ice/player_footstep_ice-005.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{323e0b1d-60dc-49b4-b4cb-c960a3a22fe7}</destination>
+		</relationship>
+	</object>
+</objects>

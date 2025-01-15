@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{d13f9b59-6166-449d-bf69-bd56fb1eef06}">
+		<property name="assetPath">
+			<value>SFX/PLAYER/Footsteps/player_footstep_snow/player_footstep_snow - layer 1-004.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.5</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{323e0b1d-60dc-49b4-b4cb-c960a3a22fe7}</destination>
+		</relationship>
+	</object>
+</objects>
